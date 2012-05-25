@@ -20,12 +20,14 @@ function foo()
 		body(
 			img(banner.jpg, id="banner"),
 			img(line.jpg),
+			h1(raw(chapter 1)),
 			raw(
 <form method="post" action="test.cgi">
 	<input type="submit" value="go">
 </form>
 				)
 			));
+
 	return 0;
 }
 

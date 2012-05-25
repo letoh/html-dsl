@@ -1,18 +1,16 @@
 #ifndef _HTML_H_
 #define _HTML_H_
 
-#define _t(tag)									\
-	printf("<" tag ">\n")
+#define _t(tag)	printf("<" tag ">\n")
 
-#define html(...)							\
-	_t("html");								\
+#define _vartag(t, ...)						\
+	_t(#t);									\
 	__VA_ARGS__;							\
-	_t("/html")
+	_t("/" #t)
 
-#define head(...)								\
-	_t("head");									\
-	__VA_ARGS__;								\
-	_t("/head")
+#define html(...) _vartag(html, __VA_ARGS__) 
+#define head(...) _vartag(head, __VA_ARGS__) 
+#define body(...) _vartag(body, __VA_ARGS__) 
 
 #define title(s)								\
 	_t("title");								\
@@ -25,21 +23,18 @@
 #define script(f)									\
 	printf("<script type=\"text/javascript\" src=\"%s\" />\n", f)
 
-#define body(...)								\
-	_t("body");									\
-	__VA_ARGS__;								\
-	_t("/body")
+#define raw(r) printf(#r)
+#define js(r)  raw(r)
 
-#define raw(r)									\
-	printf(#r)
+#define h1(...) _vartag(h1, __VA_ARGS__) 
+#define h2(...) _vartag(h2, __VA_ARGS__) 
+#define h3(...) _vartag(h3, __VA_ARGS__) 
+#define h4(...) _vartag(h4, __VA_ARGS__) 
 
-#define js(r)									\
-	raw(r)
-
-#define h1(s)									\
-	_t("h1");									\
-	printf(s);									\
-	_t("/h1")
+#define div(...)   _vartag(div, __VA_ARGS__)
+#define span(...)  _vartag(span, __VA_ARGS__)
+#define table(...) _vartag(table, __VA_ARGS__)
+#define form(...)  _vartag(form, __VA_ARGS__)
 
 #define img(f, ...)								\
 	printf("<img src=\"%s\" %s />\n", #f, # __VA_ARGS__) \
