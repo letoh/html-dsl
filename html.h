@@ -3,22 +3,26 @@
 
 #define _t(tag)	printf("<" tag ">\n")
 
-#define _vartag(t, ...)						\
-	_t(#t);									\
-	__VA_ARGS__;							\
-	_t("/" #t)
+#define xstr(s)  #s
 
-#define html(...) _vartag(html, __VA_ARGS__) 
-#define head(...) _vartag(head, __VA_ARGS__) 
-#define body(...) _vartag(body, __VA_ARGS__) 
+#define single(tag, ...)						\
+	printf("<" xstr(tag) " " xstr(__VA_ARGS__) " />\n")
+
+#define _vartag(t, a, ...) \
+	printf("<" xstr(t) " " a " >\n");	\
+	__VA_ARGS__;	\
+	_t("/" xstr(t))
+
+#define html(...) _vartag(html, "", __VA_ARGS__) 
+#define head(...) _vartag(head, "", __VA_ARGS__) 
+#define body(...) _vartag(body, "", __VA_ARGS__) 
 
 #define title(s)								\
 	_t("title");								\
 	printf(s);									\
 	_t("/title")
 
-#define meta(...)								\
-	printf("<meta %s>\n", ##__VA_ARGS__)
+#define meta(...) single(meta, __VA_ARGS__)
 
 #define css(f)									\
 	printf("<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\" />\n", f)
@@ -26,20 +30,38 @@
 #define script(f)									\
 	printf("<script type=\"text/javascript\" src=\"%s\" />\n", f)
 
-#define raw(r) printf(#r)
+#define echo(r) printf(r)
+#define raw(r) echo(#r)
 #define js(r)  raw(r)
 
-#define h1(...) _vartag(h1, __VA_ARGS__) 
-#define h2(...) _vartag(h2, __VA_ARGS__) 
-#define h3(...) _vartag(h3, __VA_ARGS__) 
-#define h4(...) _vartag(h4, __VA_ARGS__) 
+#define attr xstr
 
-#define div(...)   _vartag(div, __VA_ARGS__)
-#define span(...)  _vartag(span, __VA_ARGS__)
-#define table(...) _vartag(table, __VA_ARGS__)
-#define form(...)  _vartag(form, __VA_ARGS__)
+#define h1(...) _vartag(h1, "", __VA_ARGS__) 
+#define h2(...) _vartag(h2, "", __VA_ARGS__) 
+#define h3(...) _vartag(h3, "", __VA_ARGS__) 
+#define h4(...) _vartag(h4, "", __VA_ARGS__) 
 
 #define img(f, ...)								\
 	printf("<img src=\"%s\" %s />\n", #f, # __VA_ARGS__) \
+
+#define br printf("</ br>\n")
+
+#define div(a, ...)   _vartag(div, a, __VA_ARGS__)
+#define span(a, ...)  _vartag(span, a, __VA_ARGS__)
+#define table(a, ...) _vartag(table, a, __VA_ARGS__)
+
+/* form */
+#define form(m, s, a, ...) \
+	_vartag(form, "method=\"" xstr(m) "\" action=\"" s "\" "  a, __VA_ARGS__)
+
+#define button(t, ...) _vartag(button, __VA_ARGS__, echo(t))
+#define label(t, ...)  _vartag(label, xstr(t), __VA_ARGS__)
+#define input(...)     single(input, __VA_ARGS__)
+#define submit(...)    input(type="submit" __VA_ARGS__)
+#define text(...)      input(type="text" __VA_ARGS__)
+/* TODO */
+#define radio(...) input(type="radio" __VA_ARGS__)
+#define check(...) input(type="checkbox" __VA_ARGS__)
+
 
 #endif /* _HTML_H_ */
