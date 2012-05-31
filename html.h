@@ -17,6 +17,9 @@
 	printf(s);									\
 	_t("/title")
 
+#define meta(...)								\
+	printf("<meta %s>\n", ##__VA_ARGS__)
+
 #define css(f)									\
 	printf("<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\" />\n", f)
 
