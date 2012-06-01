@@ -10,7 +10,7 @@
 
 #define _vartag(t, a, ...) \
 	printf("<" xstr(t) " " a " >\n");	\
-	__VA_ARGS__;	\
+	__VA_ARGS__;						\
 	_t("/" xstr(t))
 
 #define html(...) _vartag(html, "", __VA_ARGS__) 
@@ -27,8 +27,10 @@
 #define css(f)									\
 	printf("<link rel=\"stylesheet\" type=\"text/css\" href=\"%s\" />\n", f)
 
-#define script(f)									\
-	printf("<script type=\"text/javascript\" src=\"%s\" />\n", f)
+//#define script(f)													\
+//	printf("<script type=\"text/javascript\" src=\"%s\" />\n", f)
+#define script(f)								\
+	printf("<script type=\"text/javascript\" src=\"%s\"></script>\n", f)
 
 #define echo(r) printf(r)
 #define raw(r) echo(#r)
@@ -44,21 +46,28 @@
 #define img(f, ...)								\
 	printf("<img src=\"%s\" %s />\n", #f, # __VA_ARGS__) \
 
-#define br printf("</ br>\n")
+#define br printf("<br />\n")
 
-#define div(a, ...)   _vartag(div, a, __VA_ARGS__)
-#define span(a, ...)  _vartag(span, a, __VA_ARGS__)
-#define table(a, ...) _vartag(table, a, __VA_ARGS__)
+#define div(a, ...)   _vartag(div, attr(a), __VA_ARGS__)
+#define span(a, ...)  _vartag(span, a, ## __VA_ARGS__)
+#define center(...) _vartag(center, "", __VA_ARGS__)
+
+/* table */
+#define table(a, ...) _vartag(table, attr(a), ## __VA_ARGS__)
+#define tr(...) _vartag(tr, "", ## __VA_ARGS__)
+#define td(...) _vartag(td, "", ## __VA_ARGS__)
 
 /* form */
 #define form(m, s, a, ...) \
-	_vartag(form, "method=\"" xstr(m) "\" action=\"" s "\" "  a, __VA_ARGS__)
+	_vartag(form, "method=\"" xstr(m) "\" action=\"" s "\" "  attr(a), ## __VA_ARGS__)
 
 #define button(t, ...) _vartag(button, __VA_ARGS__, echo(t))
-#define label(t, ...)  _vartag(label, xstr(t), __VA_ARGS__)
+//#define label(t, a, ...)  _vartag(label, a, echo(t), ## __VA_ARGS__)
+#define label(t, ...)  _vartag(label, attr(__VA_ARGS__), echo(t))
 #define input(...)     single(input, __VA_ARGS__)
 #define submit(...)    input(type="submit" __VA_ARGS__)
 #define text(...)      input(type="text" __VA_ARGS__)
+#define hidden(n, v)   printf("<input type=\"hidden\" name=\"%s\" value=\"%s\" />\n", xstr(n), xstr(v))
 /* TODO */
 #define radio(...) input(type="radio" __VA_ARGS__)
 #define check(...) input(type="checkbox" __VA_ARGS__)
