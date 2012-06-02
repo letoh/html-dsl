@@ -17,9 +17,9 @@
 #define head(...) _vartag(head, "", __VA_ARGS__) 
 #define body(...) _vartag(body, "", __VA_ARGS__) 
 
-#define title(s)								\
+#define title(s, ...)								\
 	_t("title");								\
-	printf(s);									\
+	printf(s, ## __VA_ARGS__);									\
 	_t("/title")
 
 #define meta(...) single(meta, __VA_ARGS__)
@@ -44,7 +44,7 @@
 #define h4(...) _vartag(h4, "", __VA_ARGS__) 
 
 #define img(f, ...)								\
-	printf("<img src=\"%s\" %s />\n", #f, # __VA_ARGS__) \
+	printf("<img src=\"%s\" %s />\n", f, # __VA_ARGS__) \
 
 #define br printf("<br />\n")
 
@@ -54,6 +54,7 @@
 
 /* table */
 #define table(a, ...) _vartag(table, attr(a), ## __VA_ARGS__)
+#define th(...) _vartag(th, "", ## __VA_ARGS__)
 #define tr(...) _vartag(tr, "", ## __VA_ARGS__)
 #define td(...) _vartag(td, "", ## __VA_ARGS__)
 
@@ -67,10 +68,12 @@
 #define input(...)     single(input, __VA_ARGS__)
 #define submit(...)    input(type="submit" __VA_ARGS__)
 #define text(...)      input(type="text" __VA_ARGS__)
+#define pass(...)      input(type="password" __VA_ARGS__)
+#define img2(s, ...)      input(type="image" src=s __VA_ARGS__)
 #define hidden(n, v)   printf("<input type=\"hidden\" name=\"%s\" value=\"%s\" />\n", xstr(n), xstr(v))
-/* TODO */
-#define radio(...) input(type="radio" __VA_ARGS__)
-#define check(...) input(type="checkbox" __VA_ARGS__)
+#define radio(g, v, ...) input(type="radio" name=g value=v __VA_ARGS__)
+#define check(g, v, ...) input(type="checkbox" name=g value=v __VA_ARGS__)
 
+#define hr(...) single(hr, __VA_ARGS__)
 
 #endif /* _HTML_H_ */
