@@ -13,7 +13,7 @@
 	__VA_ARGS__;						\
 	_t("/" xstr(t))
 
-#define html(...) _vartag(html, "", __VA_ARGS__) 
+#define html(...) _vartag(html, attr(xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"), __VA_ARGS__)
 #define head(...) _vartag(head, "", __VA_ARGS__) 
 #define body(...) _vartag(body, "", __VA_ARGS__) 
 
@@ -83,5 +83,6 @@
 #define check(l, g, v, ...) label(l), input(type="checkbox" name=g value=v __VA_ARGS__)
 
 #define hr(...) single(hr, __VA_ARGS__)
+#define url(t, src, ...)  _vartag(a, attr(href=src __VA_ARGS__), echo(t))
 
 #endif /* _HTML_H_ */
