@@ -32,9 +32,12 @@
 #define script(f)								\
 	printf("<script type=\"text/javascript\" src=\"%s\"></script>\n", f)
 
-#define echo(r) printf(r)
+#define echo(r, ...) printf(r, ## __VA_ARGS__)
 #define raw(r) echo(#r)
-#define js(r)  raw(r)
+#define js(...)									\
+	raw(<script type="text/javascript">);		\
+	__VA_ARGS__;								\
+	raw(</script>)
 
 #define attr xstr
 
@@ -75,7 +78,7 @@
 #define text(n, ...)  input(type="text" name=n id=n __VA_ARGS__)
 #define pass(n, ...)      input(type="password" name=n id=n __VA_ARGS__)
 #define img2(s, ...)      input(type="image" src=s __VA_ARGS__)
-#define hidden(n, v, ...)  input(type="hidden" name=n value=v __VA_ARGS__)
+#define hidden(n, v, ...)  input(type="hidden" name=n id=n value=v __VA_ARGS__)
 #define radio(l, g, v, ...) label(l), input(type="radio" name=g value=v __VA_ARGS__)
 #define check(l, g, v, ...) label(l), input(type="checkbox" name=g value=v __VA_ARGS__)
 
