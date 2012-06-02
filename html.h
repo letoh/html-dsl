@@ -58,11 +58,17 @@
 #define tr(...) _vartag(tr, "", ## __VA_ARGS__)
 #define td(...) _vartag(td, "", ## __VA_ARGS__)
 
-/* form */
-#define form(m, s, a, ...) \
-	_vartag(form, "method=\"" xstr(m) "\" action=\"" s "\" "  attr(a), ## __VA_ARGS__)
+/** form
+ *
+ * form(GET, "/abc", "", ""
+ *     [, <form input elements>]
+ *     );
+ *
+ */
+#define form(m, s, n, a, ...)											\
+	_vartag(form, attr(method=#m action=s name=n id=n a), ## __VA_ARGS__)
 
-#define button(t, ...) _vartag(button, __VA_ARGS__, echo(t))
+#define button(t, ...) _vartag(button, attr(__VA_ARGS__), echo(t))
 //#define label(t, a, ...)  _vartag(label, a, echo(t), ## __VA_ARGS__)
 #define label(t, ...)  _vartag(label, attr(__VA_ARGS__), echo(t))
 #define input(...)     single(input, __VA_ARGS__)
@@ -70,9 +76,9 @@
 #define text(...)      input(type="text" __VA_ARGS__)
 #define pass(...)      input(type="password" __VA_ARGS__)
 #define img2(s, ...)      input(type="image" src=s __VA_ARGS__)
-#define hidden(n, v)   printf("<input type=\"hidden\" name=\"%s\" value=\"%s\" />\n", xstr(n), xstr(v))
-#define radio(g, v, ...) input(type="radio" name=g value=v __VA_ARGS__)
-#define check(g, v, ...) input(type="checkbox" name=g value=v __VA_ARGS__)
+#define hidden(n, v, ...)  input(type="hidden" name=n value=v __VA_ARGS__)
+#define radio(l, g, v, ...) label(l), input(type="radio" name=g value=v __VA_ARGS__)
+#define check(l, g, v, ...) label(l), input(type="checkbox" name=g value=v __VA_ARGS__)
 
 #define hr(...) single(hr, __VA_ARGS__)
 
