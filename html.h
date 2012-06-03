@@ -52,7 +52,7 @@
 #define br printf("<br />\n")
 
 #define div(a, ...)   _vartag(div, attr(a), __VA_ARGS__)
-#define span(a, ...)  _vartag(span, a, ## __VA_ARGS__)
+#define span(a, ...)  _vartag(span, attr(a), __VA_ARGS__)
 #define center(...) _vartag(center, "", __VA_ARGS__)
 
 /* table */
