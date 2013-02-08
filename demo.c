@@ -9,13 +9,11 @@ int main(int argc, char *argv[])
 			title("Site Title"),
 			script("http://test.com/test.js"),
 			css("css/test.css"),
-			raw(
-<script type="text/javascript">
+			js(
 function foo()
 {
 	alert("abc");
 }
-</script>
 				)),
 		body(
 			img("banner.jpg", id="banner"),

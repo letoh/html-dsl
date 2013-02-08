@@ -36,7 +36,7 @@
 #define raw(r) echo(#r)
 #define js(...)									\
 	raw(<script type="text/javascript">);		\
-	__VA_ARGS__;								\
+	raw(__VA_ARGS__);								\
 	raw(</script>)
 
 #define attr xstr
