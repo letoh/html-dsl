@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
 			title("Site Title"),
 			script("http://test.com/test.js"),
 			css("css/test.css"),
-			js(
+			raw(
 <script type="text/javascript">
 function foo()
 {
@@ -18,8 +18,8 @@ function foo()
 </script>
 				)),
 		body(
-			img(banner.jpg, id="banner"),
-			img(line.jpg),
+			img("banner.jpg", id="banner"),
+			img("line.jpg"),
 			h1(raw(chapter 1)),
 			raw(
 <form method="post" action="test.cgi">
